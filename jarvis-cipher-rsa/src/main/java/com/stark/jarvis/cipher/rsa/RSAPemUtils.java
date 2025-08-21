@@ -1,5 +1,6 @@
 package com.stark.jarvis.cipher.rsa;
 
+import com.stark.jarvis.cipher.core.AsymmetricAlgorithm;
 import com.stark.jarvis.cipher.core.IOUtils;
 import com.stark.jarvis.cipher.core.PemUtils;
 import com.stark.jarvis.cipher.core.SubjectInfo;
@@ -37,9 +38,7 @@ import static java.util.Objects.requireNonNull;
  */
 public class RSAPemUtils extends PemUtils {
 
-    private static final String ALGORITHM = "RSA";
-
-    private static final String SIGNATURE_ALGORITHM = "SHA256withRSA";
+    private static final AsymmetricAlgorithm algorithm = AsymmetricAlgorithm.RSA;
 
     private static final int KEY_SIZE = 2048;
 
@@ -54,7 +53,7 @@ public class RSAPemUtils extends PemUtils {
      */
     public static KeyPair createKeyPair() {
         try {
-            KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(ALGORITHM, BouncyCastleProvider.PROVIDER_NAME);
+            KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(algorithm.getKeyAlgorithm(), algorithm.getProvider());
             keyPairGenerator.initialize(KEY_SIZE);
             return keyPairGenerator.generateKeyPair();
         } catch (NoSuchAlgorithmException e) {
@@ -107,12 +106,12 @@ public class RSAPemUtils extends PemUtils {
                 .addExtension(Extension.keyUsage, true, new KeyUsage(KeyUsage.keyCertSign | KeyUsage.cRLSign));
 
         // 3. 用私钥签名生成证书
-        ContentSigner signer = new JcaContentSignerBuilder(SIGNATURE_ALGORITHM)
-                .setProvider(BouncyCastleProvider.PROVIDER_NAME)
+        ContentSigner signer = new JcaContentSignerBuilder(algorithm.getSignatureAlgorithm())
+                .setProvider(algorithm.getProvider())
                 .build(keyPair.getPrivate());
         X509CertificateHolder certHolder = certBuilder.build(signer);
         return new JcaX509CertificateConverter()
-                .setProvider(BouncyCastleProvider.PROVIDER_NAME)
+                .setProvider(algorithm.getProvider())
                 .getCertificate(certHolder);
     }
 
@@ -167,12 +166,12 @@ public class RSAPemUtils extends PemUtils {
                 .addExtension(Extension.keyUsage, true, new KeyUsage(KeyUsage.digitalSignature | KeyUsage.keyEncipherment | KeyUsage.dataEncipherment));
 
         // 3. 用私钥签名生成证书
-        ContentSigner signer = new JcaContentSignerBuilder(SIGNATURE_ALGORITHM)
-                .setProvider(BouncyCastleProvider.PROVIDER_NAME)
+        ContentSigner signer = new JcaContentSignerBuilder(algorithm.getSignatureAlgorithm())
+                .setProvider(algorithm.getProvider())
                 .build(caPrivateKey);
         X509CertificateHolder certHolder = certBuilder.build(signer);
         return new JcaX509CertificateConverter()
-                .setProvider(BouncyCastleProvider.PROVIDER_NAME)
+                .setProvider(algorithm.getProvider())
                 .getCertificate(certHolder);
     }
 
@@ -183,7 +182,7 @@ public class RSAPemUtils extends PemUtils {
      */
     private static KeyFactory getKeyFactory() {
         try {
-            return KeyFactory.getInstance(ALGORITHM, BouncyCastleProvider.PROVIDER_NAME);
+            return KeyFactory.getInstance(algorithm.getKeyAlgorithm(), algorithm.getProvider());
         } catch (NoSuchAlgorithmException e) {
             throw new UnsupportedOperationException("不支持的算法", e);
         } catch (NoSuchProviderException e) {
@@ -280,7 +279,7 @@ public class RSAPemUtils extends PemUtils {
     public static X509Certificate loadX509FromStream(InputStream in) {
         try (BufferedInputStream bis = new BufferedInputStream(in)) {
             try {
-                CertificateFactory cf = CertificateFactory.getInstance("X.509", BouncyCastleProvider.PROVIDER_NAME);
+                CertificateFactory cf = CertificateFactory.getInstance("X.509", algorithm.getProvider());
                 X509Certificate cert = (X509Certificate) cf.generateCertificate(bis);
                 cert.checkValidity();
                 return cert;

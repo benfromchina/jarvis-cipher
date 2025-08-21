@@ -1,7 +1,9 @@
 package com.stark.jarvis.cipher.core;
 
-import java.security.*;
-import java.security.cert.CertificateEncodingException;
+import lombok.SneakyThrows;
+
+import java.security.PrivateKey;
+import java.security.PublicKey;
 import java.security.cert.CertificateExpiredException;
 import java.security.cert.CertificateNotYetValidException;
 import java.security.cert.X509Certificate;
@@ -89,7 +91,8 @@ public class PemUtils {
      * @param cert X509 证书
      * @return pem 字符串
      */
-    public static String certToPEM(X509Certificate cert) throws CertificateEncodingException {
+    @SneakyThrows
+    public static String certToPEM(X509Certificate cert) {
         return "-----BEGIN CERTIFICATE-----\n" +
                 bytesToPEM(cert.getEncoded()) + "\n" +
                 "-----END CERTIFICATE-----\n";

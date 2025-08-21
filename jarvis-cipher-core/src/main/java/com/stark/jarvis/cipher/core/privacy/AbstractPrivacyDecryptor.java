@@ -1,5 +1,7 @@
 package com.stark.jarvis.cipher.core.privacy;
 
+import com.stark.jarvis.cipher.core.AsymmetricAlgorithm;
+
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
@@ -33,15 +35,15 @@ public abstract class AbstractPrivacyDecryptor implements PrivacyDecryptor {
     /**
      * 构造敏感信息解密的抽象类
      *
-     * @param transformation 加密使用的模式（算法名称/工作模式/填充方案）
-     * @param privateKey     加密使用的私钥
+     * @param algorithm  非对称加密算法
+     * @param privateKey 加密使用的私钥
      */
-    protected AbstractPrivacyDecryptor(String transformation, PrivateKey privateKey) {
+    protected AbstractPrivacyDecryptor(AsymmetricAlgorithm algorithm, PrivateKey privateKey) {
         this.privateKey = requireNonNull(privateKey);
         try {
-            cipher = Cipher.getInstance(transformation);
+            cipher = Cipher.getInstance(algorithm.getTransformation());
         } catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
-            throw new IllegalArgumentException("当前 Java 环境不支持 " + transformation, e);
+            throw new IllegalArgumentException("当前 Java 环境不支持 " + algorithm.getTransformation(), e);
         }
     }
 

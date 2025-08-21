@@ -1,5 +1,6 @@
 package com.stark.jarvis.cipher.rsa;
 
+import com.stark.jarvis.cipher.core.AsymmetricAlgorithm;
 import com.stark.jarvis.cipher.core.signer.Signer;
 import com.stark.jarvis.cipher.core.verifier.Verifier;
 import com.stark.jarvis.cipher.rsa.signer.RSASigner;
@@ -32,7 +33,7 @@ public class RSASignerTest {
 
     @Test
     public void testGetAlgorithm() {
-        Assertions.assertEquals("SHA256-RSA2048", rsaSigner.getAlgorithm());
+        Assertions.assertEquals(AsymmetricAlgorithm.RSA.getName(), rsaSigner.getAlgorithm());
     }
 
 }

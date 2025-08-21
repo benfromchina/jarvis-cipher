@@ -1,5 +1,7 @@
 package com.stark.jarvis.cipher.core.aead;
 
+import com.stark.jarvis.cipher.core.AeadAlgorithm;
+
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
@@ -23,12 +25,7 @@ public abstract class AbstractAeadCipher implements AeadCipher {
     /**
      * 算法名称
      */
-    private final String algorithm;
-
-    /**
-     * 加密使用的模式（算法名称/工作模式/填充方案）
-     */
-    private final String transformation;
+    private final AeadAlgorithm algorithm;
 
     /**
      * 认证标签字节数
@@ -43,14 +40,12 @@ public abstract class AbstractAeadCipher implements AeadCipher {
     /**
      * 构造对称加密算法
      *
-     * @param algorithm      算法名称
-     * @param transformation 加密使用的模式（算法名称/工作模式/填充方案）
-     * @param tagLengthBit   认证标签字节数
-     * @param key            秘钥
+     * @param algorithm    算法名称
+     * @param tagLengthBit 认证标签字节数
+     * @param key          秘钥
      */
-    protected AbstractAeadCipher(String algorithm, String transformation, int tagLengthBit, byte[] key) {
+    protected AbstractAeadCipher(AeadAlgorithm algorithm, int tagLengthBit, byte[] key) {
         this.algorithm = algorithm;
-        this.transformation = transformation;
         this.tagLengthBit = tagLengthBit;
         this.key = key;
     }
@@ -65,8 +60,8 @@ public abstract class AbstractAeadCipher implements AeadCipher {
      */
     public String encrypt(byte[] associatedData, byte[] nonce, byte[] plaintext) {
         try {
-            Cipher cipher = Cipher.getInstance(transformation);
-            cipher.init(Cipher.ENCRYPT_MODE, new SecretKeySpec(key, algorithm), new GCMParameterSpec(tagLengthBit, nonce));
+            Cipher cipher = Cipher.getInstance(algorithm.getTransformation());
+            cipher.init(Cipher.ENCRYPT_MODE, new SecretKeySpec(key, algorithm.name()), new GCMParameterSpec(tagLengthBit, nonce));
             if (associatedData != null) {
                 cipher.updateAAD(associatedData);
             }
@@ -91,8 +86,8 @@ public abstract class AbstractAeadCipher implements AeadCipher {
      */
     public String decrypt(byte[] associatedData, byte[] nonce, byte[] ciphertext) {
         try {
-            Cipher cipher = Cipher.getInstance(transformation);
-            cipher.init(Cipher.DECRYPT_MODE, new SecretKeySpec(key, algorithm), new GCMParameterSpec(tagLengthBit, nonce));
+            Cipher cipher = Cipher.getInstance(algorithm.getTransformation());
+            cipher.init(Cipher.DECRYPT_MODE, new SecretKeySpec(key, algorithm.name()), new GCMParameterSpec(tagLengthBit, nonce));
             if (associatedData != null) {
                 cipher.updateAAD(associatedData);
             }

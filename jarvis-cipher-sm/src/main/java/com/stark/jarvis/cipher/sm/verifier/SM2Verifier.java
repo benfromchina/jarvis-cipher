@@ -1,5 +1,6 @@
 package com.stark.jarvis.cipher.sm.verifier;
 
+import com.stark.jarvis.cipher.core.AsymmetricAlgorithm;
 import com.stark.jarvis.cipher.core.verifier.AbstractVerifier;
 import com.tencent.kona.KonaProvider;
 
@@ -19,7 +20,7 @@ public class SM2Verifier extends AbstractVerifier {
     }
 
     public SM2Verifier(PublicKey publicKey) {
-        super("SM2", publicKey);
+        super(AsymmetricAlgorithm.SM2, publicKey);
     }
 
 }

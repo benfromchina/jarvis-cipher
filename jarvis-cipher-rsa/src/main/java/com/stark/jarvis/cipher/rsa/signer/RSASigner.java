@@ -1,5 +1,6 @@
 package com.stark.jarvis.cipher.rsa.signer;
 
+import com.stark.jarvis.cipher.core.AsymmetricAlgorithm;
 import com.stark.jarvis.cipher.core.signer.AbstractSigner;
 
 import java.security.PrivateKey;
@@ -13,7 +14,7 @@ import java.security.PrivateKey;
 public final class RSASigner extends AbstractSigner {
 
     public RSASigner(PrivateKey privateKey) {
-        super("SHA256-RSA2048", "SHA256withRSA", privateKey);
+        super(AsymmetricAlgorithm.RSA, privateKey);
     }
 
 }

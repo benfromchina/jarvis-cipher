@@ -1,5 +1,7 @@
 package com.stark.jarvis.cipher.core.signer;
 
+import com.stark.jarvis.cipher.core.AsymmetricAlgorithm;
+
 import java.nio.charset.StandardCharsets;
 import java.security.*;
 import java.util.Base64;
@@ -15,14 +17,9 @@ import static java.util.Objects.requireNonNull;
 public abstract class AbstractSigner implements Signer {
 
     /**
-     * 自定义的签名算法名称
+     * 非对称加密算法
      */
-    private final String algorithm;
-
-    /**
-     * 签名算法标准名称
-     */
-    private final String algorithmName;
+    private final AsymmetricAlgorithm algorithm;
 
     /**
      * 私钥
@@ -32,13 +29,11 @@ public abstract class AbstractSigner implements Signer {
     /**
      * 构造签名器
      *
-     * @param algorithm     自定义的签名算法名称
-     * @param algorithmName 获取Signature对象时指定的算法，例如SHA256withRSA
-     * @param privateKey    私钥
+     * @param algorithm  非对称加密算法
+     * @param privateKey 私钥
      */
-    protected AbstractSigner(String algorithm, String algorithmName, PrivateKey privateKey) {
+    protected AbstractSigner(AsymmetricAlgorithm algorithm, PrivateKey privateKey) {
         this.algorithm = requireNonNull(algorithm);
-        this.algorithmName = requireNonNull(algorithmName);
         this.privateKey = requireNonNull(privateKey);
     }
 
@@ -48,12 +43,12 @@ public abstract class AbstractSigner implements Signer {
 
         byte[] sign;
         try {
-            Signature signature = Signature.getInstance(algorithmName);
+            Signature signature = Signature.getInstance(algorithm.getSignatureAlgorithm());
             signature.initSign(privateKey);
             signature.update(message.getBytes(StandardCharsets.UTF_8));
             sign = signature.sign();
         } catch (NoSuchAlgorithmException e) {
-            throw new UnsupportedOperationException("当前签名算法不支持 " + algorithmName, e);
+            throw new UnsupportedOperationException("当前签名算法不支持 " + algorithm.getSignatureAlgorithm(), e);
         } catch (InvalidKeyException e) {
             throw new IllegalArgumentException(algorithm + " 签名使用了一个不合法的私钥", e);
         } catch (SignatureException e) {
@@ -64,7 +59,7 @@ public abstract class AbstractSigner implements Signer {
 
     @Override
     public String getAlgorithm() {
-        return algorithm;
+        return algorithm.getName();
     }
 
 }

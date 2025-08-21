@@ -1,5 +1,6 @@
 package com.stark.jarvis.cipher.rsa.verifier;
 
+import com.stark.jarvis.cipher.core.AsymmetricAlgorithm;
 import com.stark.jarvis.cipher.core.verifier.AbstractVerifier;
 
 import java.security.PublicKey;
@@ -13,7 +14,7 @@ import java.security.PublicKey;
 public final class RSAVerifier extends AbstractVerifier {
 
     public RSAVerifier(PublicKey publicKey) {
-        super("SHA256withRSA", publicKey);
+        super(AsymmetricAlgorithm.RSA, publicKey);
     }
 
 }

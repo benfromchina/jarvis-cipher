@@ -1,5 +1,6 @@
 package com.stark.jarvis.cipher.sm.signer;
 
+import com.stark.jarvis.cipher.core.AsymmetricAlgorithm;
 import com.stark.jarvis.cipher.core.signer.AbstractSigner;
 import com.tencent.kona.KonaProvider;
 
@@ -19,7 +20,7 @@ public class SM2Signer extends AbstractSigner {
     }
 
     public SM2Signer(PrivateKey privateKey) {
-        super("SM2-WITH-SM3", "SM2", privateKey);
+        super(AsymmetricAlgorithm.SM2, privateKey);
     }
 
 }

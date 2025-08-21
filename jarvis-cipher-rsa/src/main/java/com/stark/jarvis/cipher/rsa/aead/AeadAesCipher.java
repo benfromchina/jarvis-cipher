@@ -1,5 +1,6 @@
 package com.stark.jarvis.cipher.rsa.aead;
 
+import com.stark.jarvis.cipher.core.AeadAlgorithm;
 import com.stark.jarvis.cipher.core.aead.AbstractAeadCipher;
 
 /**
@@ -10,14 +11,10 @@ import com.stark.jarvis.cipher.core.aead.AbstractAeadCipher;
  */
 public final class AeadAesCipher extends AbstractAeadCipher {
 
-    private static final String TRANSFORMATION = "AES/GCM/NoPadding";
-
     private static final int TAG_LENGTH_BIT = 128;
 
-    private static final String ALGORITHM = "AES";
-
     public AeadAesCipher(byte[] key) {
-        super(ALGORITHM, TRANSFORMATION, TAG_LENGTH_BIT, key);
+        super(AeadAlgorithm.AES, TAG_LENGTH_BIT, key);
     }
 
 }

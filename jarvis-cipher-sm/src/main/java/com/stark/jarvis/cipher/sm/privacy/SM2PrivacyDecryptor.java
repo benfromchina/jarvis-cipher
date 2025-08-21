@@ -1,5 +1,6 @@
 package com.stark.jarvis.cipher.sm.privacy;
 
+import com.stark.jarvis.cipher.core.AsymmetricAlgorithm;
 import com.stark.jarvis.cipher.core.privacy.AbstractPrivacyDecryptor;
 import com.tencent.kona.KonaProvider;
 
@@ -19,7 +20,7 @@ public final class SM2PrivacyDecryptor extends AbstractPrivacyDecryptor {
     }
 
     public SM2PrivacyDecryptor(PrivateKey privateKey) {
-        super("SM2", privateKey);
+        super(AsymmetricAlgorithm.SM2, privateKey);
     }
 
 }

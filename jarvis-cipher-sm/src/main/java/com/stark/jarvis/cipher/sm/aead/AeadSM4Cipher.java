@@ -1,5 +1,6 @@
 package com.stark.jarvis.cipher.sm.aead;
 
+import com.stark.jarvis.cipher.core.AeadAlgorithm;
 import com.stark.jarvis.cipher.core.aead.AbstractAeadCipher;
 import com.tencent.kona.KonaProvider;
 
@@ -21,17 +22,13 @@ public final class AeadSM4Cipher extends AbstractAeadCipher {
         Security.addProvider(new KonaProvider());
     }
 
-    private static final String TRANSFORMATION = "SM4/GCM/NoPadding";
-
     private static final int TAG_LENGTH_BIT = 128;
-
-    private static final String ALGORITHM = "SM4";
 
     /**
      * @param key 密钥
      */
     public AeadSM4Cipher(byte[] key) {
-        super(ALGORITHM, TRANSFORMATION, TAG_LENGTH_BIT, covertSM4Key(key));
+        super(AeadAlgorithm.SM4, TAG_LENGTH_BIT, covertSM4Key(key));
     }
 
     /**

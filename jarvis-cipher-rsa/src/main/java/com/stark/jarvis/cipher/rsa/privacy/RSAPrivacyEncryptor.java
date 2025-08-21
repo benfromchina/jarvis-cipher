@@ -1,5 +1,6 @@
 package com.stark.jarvis.cipher.rsa.privacy;
 
+import com.stark.jarvis.cipher.core.AsymmetricAlgorithm;
 import com.stark.jarvis.cipher.core.privacy.AbstractPrivacyEncryptor;
 
 import java.security.PublicKey;
@@ -13,7 +14,7 @@ import java.security.PublicKey;
 public final class RSAPrivacyEncryptor extends AbstractPrivacyEncryptor {
 
     public RSAPrivacyEncryptor(PublicKey publicKey) {
-        super("RSA/ECB/OAEPWithSHA-1AndMGF1Padding", publicKey);
+        super(AsymmetricAlgorithm.RSA, publicKey);
     }
 
 }

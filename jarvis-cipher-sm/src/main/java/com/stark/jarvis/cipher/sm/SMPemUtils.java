@@ -1,10 +1,12 @@
 package com.stark.jarvis.cipher.sm;
 
+import com.stark.jarvis.cipher.core.AsymmetricAlgorithm;
 import com.stark.jarvis.cipher.core.IOUtils;
 import com.stark.jarvis.cipher.core.PemUtils;
 import com.stark.jarvis.cipher.core.SubjectInfo;
 import com.tencent.kona.KonaProvider;
 import com.tencent.kona.crypto.spec.SM2ParameterSpec;
+import com.tencent.kona.sun.security.util.KnownOIDs;
 import com.tencent.kona.sun.security.x509.*;
 
 import java.io.*;
@@ -28,9 +30,7 @@ import static java.util.Objects.requireNonNull;
  */
 public class SMPemUtils extends PemUtils {
 
-    private static final String ALGORITHM = "EC";
-
-    private static final String SIGNATURE_ALGORITHM = "SM3withSM2";
+    private static final AsymmetricAlgorithm algorithm = AsymmetricAlgorithm.SM2;
 
     static {
         Security.addProvider(new KonaProvider());
@@ -43,7 +43,7 @@ public class SMPemUtils extends PemUtils {
      */
     public static KeyPair createKeyPair() {
         try {
-            KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(ALGORITHM, KonaProvider.NAME);
+            KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(algorithm.getKeyAlgorithm(), algorithm.getProvider());
             keyPairGenerator.initialize(SM2ParameterSpec.instance());
             return keyPairGenerator.generateKeyPair();
         } catch (NoSuchAlgorithmException | InvalidAlgorithmParameterException e) {
@@ -92,7 +92,7 @@ public class SMPemUtils extends PemUtils {
         certInfo.setIssuer(issuer);
         certInfo.setKey(new CertificateX509Key(keyPair.getPublic()));
         certInfo.setVersion(new CertificateVersion(CertificateVersion.V3));
-        certInfo.setAlgorithmId(new CertificateAlgorithmId(AlgorithmId.get(SIGNATURE_ALGORITHM)));
+        certInfo.setAlgorithmId(new CertificateAlgorithmId(AlgorithmId.get(KnownOIDs.SM3withSM2.name())));
 
         // 4. 设置为 CA：basicConstraints=CA:true
         CertificateExtensions exts = new CertificateExtensions();
@@ -104,7 +104,7 @@ public class SMPemUtils extends PemUtils {
         certInfo.setExtensions(exts);
 
         // 5. 用私钥签名生成证书
-        return X509CertImpl.newSigned(certInfo, keyPair.getPrivate(), SIGNATURE_ALGORITHM);
+        return X509CertImpl.newSigned(certInfo, keyPair.getPrivate(), KnownOIDs.SM3withSM2.name());
     }
 
     /**
@@ -155,7 +155,7 @@ public class SMPemUtils extends PemUtils {
         certInfo.setIssuer(issuer);
         certInfo.setKey(new CertificateX509Key(clientPublicKey));
         certInfo.setVersion(new CertificateVersion(CertificateVersion.V3));
-        certInfo.setAlgorithmId(new CertificateAlgorithmId(AlgorithmId.get(SIGNATURE_ALGORITHM)));
+        certInfo.setAlgorithmId(new CertificateAlgorithmId(AlgorithmId.get(KnownOIDs.SM3withSM2.stdName())));
 
         // 5. 添加基本约束(非CA证书)
         CertificateExtensions exts = new CertificateExtensions();
@@ -169,7 +169,7 @@ public class SMPemUtils extends PemUtils {
         certInfo.setExtensions(exts);
 
         // 6. 用CA证书私钥签名生成证书
-        return X509CertImpl.newSigned(certInfo, caPrivateKey, SIGNATURE_ALGORITHM);
+        return X509CertImpl.newSigned(certInfo, caPrivateKey, KnownOIDs.SM3withSM2.stdName());
     }
 
     /**
@@ -179,7 +179,7 @@ public class SMPemUtils extends PemUtils {
      */
     private static KeyFactory getKeyFactory() {
         try {
-            return KeyFactory.getInstance(ALGORITHM, KonaProvider.NAME);
+            return KeyFactory.getInstance(algorithm.getKeyAlgorithm(), algorithm.getProvider());
         } catch (NoSuchAlgorithmException e) {
             throw new UnsupportedOperationException("不支持的算法", e);
         } catch (NoSuchProviderException e) {
@@ -276,7 +276,7 @@ public class SMPemUtils extends PemUtils {
     public static X509Certificate loadX509FromStream(InputStream in) {
         try (BufferedInputStream bis = new BufferedInputStream(in)) {
             try {
-                CertificateFactory cf = CertificateFactory.getInstance("X.509", KonaProvider.NAME);
+                CertificateFactory cf = CertificateFactory.getInstance("X.509", algorithm.getProvider());
                 X509Certificate cert = (X509Certificate) cf.generateCertificate(bis);
                 cert.checkValidity();
                 return cert;
