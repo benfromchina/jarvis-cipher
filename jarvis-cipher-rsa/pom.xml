@@ -5,12 +5,16 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.stark.jarvis</groupId>
+        <groupId>io.github.benfromchina</groupId>
         <artifactId>jarvis-cipher</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>1.0.0</version>
     </parent>
 
     <artifactId>jarvis-cipher-rsa</artifactId>
+
+    <name>jarvis-cipher-rsa</name>
+    <description>Concrete implementation of the RSA algorithm, including key handling, certificate management, encryption, decryption, signature, and verification.</description>
+    <url>https://github.com/benfromchina/jarvis-cipher</url>
 
     <dependencies>
         <dependency>

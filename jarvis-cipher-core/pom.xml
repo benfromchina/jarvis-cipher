@@ -5,12 +5,16 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.stark.jarvis</groupId>
+        <groupId>io.github.benfromchina</groupId>
         <artifactId>jarvis-cipher</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>1.0.0</version>
     </parent>
 
     <artifactId>jarvis-cipher-core</artifactId>
+
+    <name>jarvis-cipher-core</name>
+    <description>Core interface and abstract class definitions, including general interfaces and utility classes for AEAD encryption, privacy encryption, signature, and verification.</description>
+    <url>https://github.com/benfromchina/jarvis-cipher</url>
 
     <dependencies>
         <dependency>

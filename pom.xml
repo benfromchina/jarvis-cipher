@@ -4,10 +4,14 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.stark.jarvis</groupId>
+    <groupId>io.github.benfromchina</groupId>
     <artifactId>jarvis-cipher</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     <packaging>pom</packaging>
+
+    <name>jarvis-cipher</name>
+    <description>A Java-based cryptographic tool library that provides implementations of various encryption algorithms, including symmetric encryption, asymmetric encryption, signature, and verification.</description>
+    <url>https://github.com/benfromchina/jarvis-cipher</url>
 
     <modules>
         <module>jarvis-cipher-core</module>
@@ -23,13 +27,15 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <!-- jars -->
         <bouncycastle.version>1.81</bouncycastle.version>
+        <central-publishing-maven-plugin.version>0.7.0</central-publishing-maven-plugin.version>
         <commons-lang.version>3.18.0</commons-lang.version>
         <jarvis-cipher.version>1.0.0-SNAPSHOT</jarvis-cipher.version>
         <junit.version>5.13.4</junit.version>
         <kona.version>1.0.18</kona.version>
         <lombok.version>1.18.38</lombok.version>
         <maven-compiler-plugin.version>3.14.0</maven-compiler-plugin.version>
-        <maven-javadoc-plugin.version>3.11.2</maven-javadoc-plugin.version>
+        <maven-gpg-plugin.version>3.2.8</maven-gpg-plugin.version>
+        <maven-javadoc-plugin.version>3.11.3</maven-javadoc-plugin.version>
         <maven-source-plugin.version>3.3.1</maven-source-plugin.version>
     </properties>
 
@@ -128,16 +134,57 @@
                         </execution>
                     </executions>
                 </plugin>
+                <plugin>
+                    <groupId>org.sonatype.central</groupId>
+                    <artifactId>central-publishing-maven-plugin</artifactId>
+                    <version>${central-publishing-maven-plugin.version}</version>
+                    <extensions>true</extensions>
+                    <configuration>
+                        <publishingServerId>central</publishingServerId>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-gpg-plugin</artifactId>
+                    <version>${maven-gpg-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <id>sign-artifacts</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>sign</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
             </plugins>
         </pluginManagement>
     </build>
 
+    <developers>
+        <developer>
+            <id>mengbin</id>
+            <name>mengbin</name>
+            <email>mengbin@hotmail.com</email>
+            <url>https://github.com/benfromchina</url>
+        </developer>
+    </developers>
+
+    <scm>
+        <url>https://github.com/benfromchina/jarvis-cipher.git</url>
+        <connection>scm:git:https://github.com/benfromchina/jarvis-cipher.git</connection>
+    </scm>
+
+    <licenses>
+        <license>
+            <name>Apache-2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+            <comments>A business-friendly OSS license</comments>
+        </license>
+    </licenses>
+
     <distributionManagement>
-        <repository>
-            <id>nexus</id>
-            <name>Releases</name>
-            <url>http://129.1.50.194:8081/nexus/repository/releases/</url>
-        </repository>
         <snapshotRepository>
             <id>nexus</id>
             <name>Snapshots</name>
