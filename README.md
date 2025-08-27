@@ -7,6 +7,28 @@
 
 `jarvis-cipher` 是一个基于 Java 的加密工具库，提供多种加密算法实现，包括对称加密、非对称加密、签名与验证等功能。该项目支持 RSA 和 SM（国密）算法，适用于需要高安全性与合规性的应用场景。
 
+## 使用
+
+### RSA
+
+```xml
+<dependency>
+    <groupId>io.github.benfromchina</groupId>
+    <artifactId>jarvis-cipher-rsa</artifactId>
+    <version>1.0.0</version>
+</dependency>
+```
+
+### SM（国密）
+
+```xml
+<dependency>
+    <groupId>io.github.benfromchina</groupId>
+    <artifactId>jarvis-cipher-sm</artifactId>
+    <version>1.0.0</version>
+</dependency>
+```
+
 ## 模块结构
 
 该项目由多个模块组成：

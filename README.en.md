@@ -7,6 +7,28 @@
 
 `jarvis-cipher` is a Java-based cryptographic tool library that provides implementations of various encryption algorithms, including symmetric encryption, asymmetric encryption, signature, and verification. This project supports RSA and SM (Chinese National Standard) algorithms, making it suitable for applications requiring high security and compliance.
 
+## Installation
+
+### For RSA
+
+```xml
+<dependency>
+    <groupId>io.github.benfromchina</groupId>
+    <artifactId>jarvis-cipher-rsa</artifactId>
+    <version>1.0.0</version>
+</dependency>
+```
+
+### For SM (Chinese National Standard)
+
+```xml
+<dependency>
+    <groupId>io.github.benfromchina</groupId>
+    <artifactId>jarvis-cipher-sm</artifactId>
+    <version>1.0.0</version>
+</dependency>
+```
+
 ## Module Structure
 
 The project consists of multiple modules:
