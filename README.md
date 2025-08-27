@@ -1,3 +1,8 @@
+[![](https://img.shields.io/badge/Maven%20Central-v1.0.0-brightgreen)](https://central.sonatype.com/artifact/io.github.benfromchina/jarvis-cipher/1.0.0)
+[![](https://img.shields.io/badge/Release-v1.0.0-blue)](https://gitee.com/jarvis-lib/jarvis-cipher/releases/v2.0.3)
+[![](https://img.shields.io/badge/License-Apache--2.0-9cf)](https://www.apache.org/licenses/LICENSE-2.0.html)
+[![](https://img.shields.io/badge/JDK-8+-9cf)]()
+
 # Jarvis Cipher
 
 `jarvis-cipher` 是一个基于 Java 的加密工具库，提供多种加密算法实现，包括对称加密、非对称加密、签名与验证等功能。该项目支持 RSA 和 SM（国密）算法，适用于需要高安全性与合规性的应用场景。

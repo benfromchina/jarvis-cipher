@@ -18,7 +18,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.stark.jarvis</groupId>
+            <groupId>io.github.benfromchina</groupId>
             <artifactId>jarvis-cipher-core</artifactId>
         </dependency>
         <dependency>

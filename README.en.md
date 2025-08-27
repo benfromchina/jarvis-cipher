@@ -1,3 +1,8 @@
+[![](https://img.shields.io/badge/Maven%20Central-v1.0.0-brightgreen)](https://central.sonatype.com/artifact/io.github.benfromchina/jarvis-cipher/1.0.0)
+[![](https://img.shields.io/badge/Release-v1.0.0-blue)](https://gitee.com/jarvis-lib/jarvis-cipher/releases/v2.0.3)
+[![](https://img.shields.io/badge/License-Apache--2.0-9cf)](https://www.apache.org/licenses/LICENSE-2.0.html)
+[![](https://img.shields.io/badge/JDK-8+-9cf)]()
+
 # Jarvis Cipher
 
 `jarvis-cipher` is a Java-based cryptographic tool library that provides implementations of various encryption algorithms, including symmetric encryption, asymmetric encryption, signature, and verification. This project supports RSA and SM (Chinese National Standard) algorithms, making it suitable for applications requiring high security and compliance.

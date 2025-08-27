@@ -29,7 +29,7 @@
         <bouncycastle.version>1.81</bouncycastle.version>
         <central-publishing-maven-plugin.version>0.7.0</central-publishing-maven-plugin.version>
         <commons-lang.version>3.18.0</commons-lang.version>
-        <jarvis-cipher.version>1.0.0-SNAPSHOT</jarvis-cipher.version>
+        <jarvis-cipher.version>1.0.0</jarvis-cipher.version>
         <junit.version>5.13.4</junit.version>
         <kona.version>1.0.18</kona.version>
         <lombok.version>1.18.38</lombok.version>
@@ -73,7 +73,7 @@
                 <version>${kona.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.stark.jarvis</groupId>
+                <groupId>io.github.benfromchina</groupId>
                 <artifactId>jarvis-cipher-core</artifactId>
                 <version>${jarvis-cipher.version}</version>
             </dependency>
@@ -134,31 +134,33 @@
                         </execution>
                     </executions>
                 </plugin>
-                <plugin>
-                    <groupId>org.sonatype.central</groupId>
-                    <artifactId>central-publishing-maven-plugin</artifactId>
-                    <version>${central-publishing-maven-plugin.version}</version>
-                    <extensions>true</extensions>
-                    <configuration>
-                        <publishingServerId>central</publishingServerId>
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-gpg-plugin</artifactId>
-                    <version>${maven-gpg-plugin.version}</version>
-                    <executions>
-                        <execution>
-                            <id>sign-artifacts</id>
-                            <phase>verify</phase>
-                            <goals>
-                                <goal>sign</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
             </plugins>
         </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.sonatype.central</groupId>
+                <artifactId>central-publishing-maven-plugin</artifactId>
+                <version>${central-publishing-maven-plugin.version}</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <publishingServerId>central</publishingServerId>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>${maven-gpg-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
     </build>
 
     <developers>
